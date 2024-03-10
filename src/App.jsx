@@ -1,8 +1,12 @@
+import Navbar from './components/Navbar.jsx';
+import TodoField from './components/TodoField.jsx';
+
 function App() {
 	return (
-		<>
-			<h1 className='text-3xl font-bold underline'>Hello world!</h1>
-		</>
+		<div className='flex h-screen w-screen flex-col bg-gray-300'>
+			<Navbar />
+			<TodoField />
+		</div>
 	);
 }
 
