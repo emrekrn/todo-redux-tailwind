@@ -26,8 +26,23 @@ export default function TodoField() {
 		handleShowModal();
 	};
 
+	const handleEdit = (id, todoText) => {
+		setTodos((prev) =>
+			prev.map((todo) => {
+				if (todo.id === id) {
+					return {
+						id,
+						todoText: todoText,
+						status: todo.status,
+					};
+				} else {
+					return todo;
+				}
+			})
+		);
+	};
+
 	const handleDelete = (id) => {
-		console.log(id);
 		setTodos((prev) => prev.filter((todo) => todo.id !== id));
 	};
 
@@ -38,6 +53,7 @@ export default function TodoField() {
 			todoText={todo.todoText}
 			status={todo.status}
 			handleDelete={handleDelete}
+			handleEdit={handleEdit}
 		/>
 	));
 
