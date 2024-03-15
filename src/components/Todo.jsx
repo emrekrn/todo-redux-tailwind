@@ -3,13 +3,7 @@ import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import DeleteModal from './ui/DeleteModal.jsx';
 import EditModal from './ui/EditModal.jsx';
-export default function Todo({
-	id,
-	todoText,
-	status,
-	handleDelete,
-	handleEdit,
-}) {
+export default function Todo({ id, todoText, status }) {
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showEditmodal, setShowEditModal] = useState(false);
 
@@ -27,7 +21,6 @@ export default function Todo({
 				<DeleteModal
 					todoId={id}
 					handleShowDeleteModal={handleShowDeleteModal}
-					handleDelete={handleDelete}
 				/>
 			)}
 			{showEditmodal && (
@@ -35,7 +28,6 @@ export default function Todo({
 					todoId={id}
 					todoText={todoText}
 					handleShowEditModal={handleShowEditModal}
-					handleEdit={handleEdit}
 				/>
 			)}
 			<div className='h-12 overflow-hidden'>{todoText}</div>

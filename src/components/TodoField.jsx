@@ -5,9 +5,12 @@ import { useState } from 'react';
 import todosData from '../utils/TodosState.js';
 import CreateModal from './ui/CreateModal.jsx';
 import uniqid from 'uniqid';
+import { useDispatch, useSelector } from 'react-redux';
+import { createTodo } from '../features/todo/todoSlice.js';
 
 export default function TodoField() {
-	const [todos, setTodos] = useState(todosData);
+	const todos = useSelector((state) => state.todo);
+	const dispatch = useDispatch();
 	const [showCreateModal, setShowCreateModal] = useState(false);
 
 	const handleShowModal = () => {
@@ -15,35 +18,8 @@ export default function TodoField() {
 	};
 
 	const handleCreateTodo = (todoText) => {
-		setTodos((prev) => [
-			...prev,
-			{
-				id: uniqid(),
-				todoText,
-				status: 'not started',
-			},
-		]);
+		dispatch(createTodo(todoText));
 		handleShowModal();
-	};
-
-	const handleEdit = (id, todoText) => {
-		setTodos((prev) =>
-			prev.map((todo) => {
-				if (todo.id === id) {
-					return {
-						id,
-						todoText: todoText,
-						status: todo.status,
-					};
-				} else {
-					return todo;
-				}
-			})
-		);
-	};
-
-	const handleDelete = (id) => {
-		setTodos((prev) => prev.filter((todo) => todo.id !== id));
 	};
 
 	const todoElements = todos.map((todo) => (
@@ -52,8 +28,6 @@ export default function TodoField() {
 			id={todo.id}
 			todoText={todo.todoText}
 			status={todo.status}
-			handleDelete={handleDelete}
-			handleEdit={handleEdit}
 		/>
 	));
 

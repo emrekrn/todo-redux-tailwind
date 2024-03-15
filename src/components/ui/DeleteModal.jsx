@@ -1,8 +1,14 @@
-export default function DeleteModal({
-	todoId,
-	handleShowDeleteModal,
-	handleDelete,
-}) {
+import { deleteTodo } from '../../features/todo/todoSlice.js';
+import { useDispatch } from 'react-redux';
+
+export default function DeleteModal({ todoId, handleShowDeleteModal }) {
+	const dispatch = useDispatch();
+
+	const handleDelete = () => {
+		dispatch(deleteTodo(todoId));
+		handleShowDeleteModal();
+	};
+
 	return (
 		<div className='absolute left-0 top-0 flex h-screen w-screen items-center justify-center bg-gray-300 bg-opacity-60'>
 			<div className='flex h-1/5 w-2/5 flex-col items-center justify-between rounded-xl bg-gray-200 p-4'>
@@ -18,7 +24,7 @@ export default function DeleteModal({
 						</button>
 						<button
 							className='w-full rounded-r-3xl border-2 border-l-0 border-red-800 border-l-black duration-100 ease-linear hover:bg-red-800 hover:text-white'
-							onClick={() => handleDelete(todoId)}
+							onClick={handleDelete}
 						>
 							Yes, Delete!
 						</button>

@@ -1,15 +1,13 @@
 import { useState } from 'react';
+import { editTodo } from '../../features/todo/todoSlice.js';
+import { useDispatch } from 'react-redux';
 
-export default function EditModal({
-	todoId,
-	todoText,
-	handleShowEditModal,
-	handleEdit,
-}) {
+export default function EditModal({ todoId, todoText, handleShowEditModal }) {
 	const [todo, setTodo] = useState(todoText);
+	const dispatch = useDispatch();
 
 	const handleSubmit = () => {
-		handleEdit(todoId, todo);
+		dispatch(editTodo({ id: todoId, todoText: todo }));
 		handleShowEditModal();
 	};
 
