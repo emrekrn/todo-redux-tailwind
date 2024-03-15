@@ -31,12 +31,24 @@ export const todoSlice = createSlice({
 				}
 			});
 		},
+		changeStatus(state, action) {
+			return state.map((todo) => {
+				if (todo.id === action.payload) {
+					return {
+						...todo,
+						status: todo.status === 'not started' ? 'finished' : 'not started',
+					};
+				}
+				return todo;
+			});
+		},
 		deleteTodo(state, action) {
 			return state.filter((todo) => todo.id !== action.payload);
 		},
 	},
 });
 
-export const { createTodo, editTodo, deleteTodo } = todoSlice.actions;
+export const { createTodo, editTodo, deleteTodo, changeStatus } =
+	todoSlice.actions;
 
 export default todoSlice.reducer;

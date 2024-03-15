@@ -3,9 +3,13 @@ import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import DeleteModal from './ui/DeleteModal.jsx';
 import EditModal from './ui/EditModal.jsx';
+import { changeStatus } from '../features/todo/todoSlice.js';
+import { useDispatch } from 'react-redux';
 export default function Todo({ id, todoText, status }) {
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showEditmodal, setShowEditModal] = useState(false);
+
+	const dispatch = useDispatch();
 
 	const handleShowDeleteModal = () => {
 		setShowDeleteModal((prev) => !prev);
@@ -15,8 +19,12 @@ export default function Todo({ id, todoText, status }) {
 		setShowEditModal((prev) => !prev);
 	};
 
+	const handleStatusChange = () => {
+		dispatch(changeStatus(id));
+	};
+
 	return (
-		<div className='mb-2 flex h-12 items-center justify-between rounded-md border border-neutral-500 px-2.5'>
+		<div className='mb-2 flex h-12 items-center justify-between rounded-md border border-neutral-500 pr-2.5'>
 			{showDeleteModal && (
 				<DeleteModal
 					todoId={id}
@@ -30,7 +38,17 @@ export default function Todo({ id, todoText, status }) {
 					handleShowEditModal={handleShowEditModal}
 				/>
 			)}
-			<div className='h-12 overflow-hidden'>{todoText}</div>
+			<div
+				className='w-full cursor-pointer pl-2.5'
+				onClick={handleStatusChange}
+			>
+				<div
+					className={`h-12 overflow-hidden ${status === 'not started' ? '' : 'line-through'}`}
+				>
+					{todoText}
+				</div>
+			</div>
+
 			<div className='flex gap-2'>
 				<button
 					className='ml-auto aspect-square h-10 rounded border-2 border-gray-800 duration-100 ease-linear hover:bg-gray-800 hover:text-white'
